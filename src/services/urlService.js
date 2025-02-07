@@ -1,15 +1,13 @@
 import Url from '../models/urlScheme.js'
-
-let counter = 0
+import { generateShortUrl } from './generateShorturl.js'
 
 export const shortenUrl = async (urlData) => {
   try {
-    counter += 1
-
+    const shortenUrl = generateShortUrl()
     const newUrl = new Url(
       {
         originalUrl: urlData.originalUrl,
-        shortUrl: counter,
+        shortUrl: shortenUrl,
         expiresAt: urlData.expiresAt
       })
 

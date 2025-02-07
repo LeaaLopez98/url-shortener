@@ -1,9 +1,9 @@
-import { shortenUrl, redirectByShortUrl, findUrlById, findAllUrls, deleteUrlById } from '../services/urlService.js'
+import * as urlService from '../services/urlService.js'
 
-export const shortenUrlController = async (req, res) => {
+export const shortenUrl = async (req, res) => {
   try {
     const urlData = req.body
-    const newUrl = await shortenUrl(urlData)
+    const newUrl = await urlService.shortenUrl(urlData)
     return res.status(201).json(newUrl)
   } catch (err) {
     console.error(err)
@@ -11,11 +11,11 @@ export const shortenUrlController = async (req, res) => {
   }
 }
 
-export const redirectController = async (req, res) => {
+export const redirect = async (req, res) => {
   try {
     const shortUrl = req.params.url
 
-    const originalUrl = await redirectByShortUrl(shortUrl)
+    const originalUrl = await urlService.redirectByShortUrl(shortUrl)
 
     if (!originalUrl) {
       return res.status(404).json({ message: 'Url not found' })
@@ -28,10 +28,10 @@ export const redirectController = async (req, res) => {
   }
 }
 
-export const getUrlByIdController = async (req, res) => {
+export const getUrlById = async (req, res) => {
   try {
     const idUrl = req.params.idUrl
-    const url = await findUrlById(idUrl)
+    const url = await urlService.findUrlById(idUrl)
 
     if (!url) {
       return res.status(404).json({ message: `url with id: ${idUrl}, not found` })
@@ -44,9 +44,9 @@ export const getUrlByIdController = async (req, res) => {
   }
 }
 
-export const getAllUrlsController = async (req, res) => {
+export const getAllUrls = async (req, res) => {
   try {
-    const urls = await findAllUrls()
+    const urls = await urlService.findAllUrls()
     if (urls.length === 0) {
       return res.status(204).json()
     }
@@ -58,13 +58,13 @@ export const getAllUrlsController = async (req, res) => {
   }
 }
 
-export const deleteUrlByIdController = async (req, res) => {
+export const deleteUrlById = async (req, res) => {
   try {
     const idUrl = req.params.idUrl
 
     console.log('ID URL -> ', idUrl)
 
-    const isDelete = await deleteUrlById(idUrl)
+    const isDelete = await urlService.deleteUrlById(idUrl)
 
     if (!isDelete) {
       return res.status(404).json({ message: `url with id: ${idUrl}, not found` })
