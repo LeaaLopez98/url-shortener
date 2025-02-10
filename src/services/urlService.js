@@ -1,5 +1,5 @@
-import Url from '../models/urlScheme.js'
-import { generateShortUrl } from './generateShorturl.js'
+import Url from '../models/urlSchema.js'
+import { generateShortUrl } from './generateShortUrl.js'
 
 export const shortenUrl = async (urlData) => {
   try {
