@@ -3,7 +3,8 @@ import * as urlService from '../services/urlService.js'
 export const shortenUrl = async (req, res) => {
   try {
     const urlData = req.body
-    const newUrl = await urlService.shortenUrl(urlData)
+    const idUser = req.idUser
+    const newUrl = await urlService.shortenUrl(urlData, idUser)
     return res.status(201).json(newUrl)
   } catch (err) {
     console.error(err)
@@ -31,7 +32,8 @@ export const redirect = async (req, res) => {
 export const getUrlById = async (req, res) => {
   try {
     const idUrl = req.params.idUrl
-    const url = await urlService.findUrlById(idUrl)
+    const idUser = req.idUser
+    const url = await urlService.findUrlById(idUser, idUrl)
 
     if (!url) {
       return res.status(404).json({ message: `url with id: ${idUrl}, not found` })
@@ -44,9 +46,11 @@ export const getUrlById = async (req, res) => {
   }
 }
 
-export const getAllUrls = async (req, res) => {
+export const getUserUrls = async (req, res) => {
   try {
-    const urls = await urlService.findAllUrls()
+    const idUser = req.idUser
+
+    const urls = await urlService.findAllUserUrls(idUser)
     if (urls.length === 0) {
       return res.status(204).json()
     }
@@ -61,10 +65,9 @@ export const getAllUrls = async (req, res) => {
 export const deleteUrlById = async (req, res) => {
   try {
     const idUrl = req.params.idUrl
+    const idUser = req.idUser
 
-    console.log('ID URL -> ', idUrl)
-
-    const isDelete = await urlService.deleteUrlById(idUrl)
+    const isDelete = await urlService.deleteUrlById(idUser, idUrl)
 
     if (!isDelete) {
       return res.status(404).json({ message: `url with id: ${idUrl}, not found` })
