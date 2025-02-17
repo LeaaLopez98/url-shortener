@@ -4,6 +4,13 @@ import jwt from 'jsonwebtoken'
 
 const saltRounds = 10
 
+const generateToken = (idUser) => {
+  return jwt.sign({
+    idUser,
+    exp: Math.floor(Date.now() / 1000) + (60 * 60)
+  }, process.env.JWT_SECRET)
+}
+
 export const registerUser = async (userData) => {
   try {
     const newUser = new User({
@@ -14,7 +21,7 @@ export const registerUser = async (userData) => {
 
     await newUser.save()
 
-    const token = jwt.sign({ username: newUser.username }, process.env.JWT_SECRET)
+    const token = generateToken(newUser._id)
 
     return token
   } catch (err) {
@@ -38,7 +45,7 @@ export const loginUser = async (username, password) => {
       return false
     }
 
-    const token = jwt.sign({ username }, process.env.JWT_SECRET, { algorithm: 'HS256' })
+    const token = generateToken(user._id)
 
     return token
   } catch (err) {
