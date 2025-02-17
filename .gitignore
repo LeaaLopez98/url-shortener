@@ -132,3 +132,4 @@ dist
 deployment/.mongo-data
 client.http
 .vscode/launch.json
+deployment/.redis-data/dump.rdb
