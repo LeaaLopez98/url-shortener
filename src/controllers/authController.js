@@ -1,6 +1,6 @@
 import * as authService from '../services/authService.js'
 
-export const loginUser = async (req, res) => {
+export const loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body
 
@@ -12,12 +12,11 @@ export const loginUser = async (req, res) => {
 
     return res.status(200).json({ token })
   } catch (err) {
-    console.log(err)
-    return res.status(500).send('Internal Server Error')
+    return next(err)
   }
 }
 
-export const registerUser = async (req, res) => {
+export const registerUser = async (req, res, next) => {
   try {
     const userData = req.body
 
@@ -25,7 +24,6 @@ export const registerUser = async (req, res) => {
 
     return res.status(200).json({ token })
   } catch (err) {
-    console.log(err)
-    return res.status(500).send('Internal Server Error')
+    return next(err)
   }
 }

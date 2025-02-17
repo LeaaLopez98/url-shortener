@@ -1,6 +1,8 @@
-import User from '../models/userSchema.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import User from '../models/userSchema.js'
+import CustomError from '../error/CustomError.js'
+import { UNAUTHORIZED, NOT_FOUND } from '../constants/statusCodes.js'
 
 const saltRounds = 10
 
@@ -12,43 +14,35 @@ const generateToken = (idUser) => {
 }
 
 export const registerUser = async (userData) => {
-  try {
-    const newUser = new User({
-      username: userData.username,
-      password: await bcrypt.hash(userData.password, saltRounds),
-      email: userData.email
-    })
+  const newUser = new User({
+    username: userData.username,
+    password: await bcrypt.hash(userData.password, saltRounds),
+    email: userData.email
+  })
 
-    await newUser.save()
+  await newUser.save()
 
-    const token = generateToken(newUser._id)
+  const token = generateToken(newUser._id)
 
-    return token
-  } catch (err) {
-    console.log(err)
-  }
+  return token
 }
 
 export const loginUser = async (username, password) => {
-  try {
-    const user = await User.findOne({
-      username
-    })
+  const user = await User.findOne({
+    username
+  })
 
-    if (!user) {
-      return false
-    }
-
-    const isPasswordMatch = await bcrypt.compare(password, user.password)
-
-    if (!isPasswordMatch) {
-      return false
-    }
-
-    const token = generateToken(user._id)
-
-    return token
-  } catch (err) {
-    console.log(err)
+  if (!user) {
+    throw new CustomError(NOT_FOUND, `username: ${username}, not found`)
   }
+
+  const isPasswordMatch = await bcrypt.compare(password, user.password)
+
+  if (!isPasswordMatch) {
+    throw new CustomError(UNAUTHORIZED, 'Incorrect username or password')
+  }
+
+  const token = generateToken(user._id)
+
+  return token
 }

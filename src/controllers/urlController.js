@@ -1,18 +1,17 @@
 import * as urlService from '../services/urlService.js'
 
-export const shortenUrl = async (req, res) => {
+export const shortenUrl = async (req, res, next) => {
   try {
     const urlData = req.body
     const idUser = req.idUser
     const newUrl = await urlService.shortenUrl(urlData, idUser)
     return res.status(201).json(newUrl)
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ message: err.message })
+    return next(err)
   }
 }
 
-export const redirect = async (req, res) => {
+export const redirect = async (req, res, next) => {
   try {
     const shortUrl = req.params.url
 
@@ -24,12 +23,11 @@ export const redirect = async (req, res) => {
 
     return res.redirect(originalUrl)
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ message: err.message })
+    return next(err)
   }
 }
 
-export const getUrlById = async (req, res) => {
+export const getUrlById = async (req, res, next) => {
   try {
     const idUrl = req.params.idUrl
     const idUser = req.idUser
@@ -41,12 +39,11 @@ export const getUrlById = async (req, res) => {
 
     return res.status(200).json(url)
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ message: err.message })
+    return next(err)
   }
 }
 
-export const getUserUrls = async (req, res) => {
+export const getUserUrls = async (req, res, next) => {
   try {
     const idUser = req.idUser
 
@@ -57,12 +54,11 @@ export const getUserUrls = async (req, res) => {
 
     return res.status(200).json(urls)
   } catch (err) {
-    console.error(err)
-    return res.status(500).json({ message: err.message })
+    return next(err)
   }
 }
 
-export const deleteUrlById = async (req, res) => {
+export const deleteUrlById = async (req, res, next) => {
   try {
     const idUrl = req.params.idUrl
     const idUser = req.idUser
@@ -75,7 +71,6 @@ export const deleteUrlById = async (req, res) => {
 
     return res.status(204).json()
   } catch (err) {
-    console.log(err)
-    return res.status(500).json({ message: err.message })
+    return next(err)
   }
 }
