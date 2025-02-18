@@ -6,10 +6,6 @@ export const loginUser = async (req, res, next) => {
 
     const token = await authService.loginUser(username, password)
 
-    if (!token) {
-      return res.status(403).send('Invalid username or password')
-    }
-
     return res.status(200).json({ token })
   } catch (err) {
     return next(err)

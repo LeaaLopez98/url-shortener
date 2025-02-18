@@ -17,10 +17,6 @@ export const redirect = async (req, res, next) => {
 
     const originalUrl = await urlService.redirectByShortUrl(shortUrl)
 
-    if (!originalUrl) {
-      return res.status(404).json({ message: 'Url not found' })
-    }
-
     return res.redirect(originalUrl)
   } catch (err) {
     return next(err)
@@ -32,10 +28,6 @@ export const getUrlById = async (req, res, next) => {
     const idUrl = req.params.idUrl
     const idUser = req.idUser
     const url = await urlService.findUrlById(idUser, idUrl)
-
-    if (!url) {
-      return res.status(404).json({ message: `url with id: ${idUrl}, not found` })
-    }
 
     return res.status(200).json(url)
   } catch (err) {
@@ -63,11 +55,7 @@ export const deleteUrlById = async (req, res, next) => {
     const idUrl = req.params.idUrl
     const idUser = req.idUser
 
-    const isDelete = await urlService.deleteUrlById(idUser, idUrl)
-
-    if (!isDelete) {
-      return res.status(404).json({ message: `url with id: ${idUrl}, not found` })
-    }
+    await urlService.deleteUrlById(idUser, idUrl)
 
     return res.status(204).json()
   } catch (err) {
