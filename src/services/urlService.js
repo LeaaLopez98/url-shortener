@@ -79,7 +79,8 @@ export const deleteUrlById = async (idUser, idUrl) => {
     throw new CustomError(FORBIDDEN, 'Access denied')
   }
 
-  Url.deleteOne({ _id: idUrl })
+  await Url.deleteOne({ _id: idUrl })
+    .catch(err => console.error('Error deleting URL:', err))
 
   return true
 }
