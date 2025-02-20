@@ -15,11 +15,12 @@
     "hashids": "^2.3.0",
     "http-errors": "~1.6.3",
     "ioredis": "^5.5.0",
-    "jade": "~1.11.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "standard": "^17.1.2"

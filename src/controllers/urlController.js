@@ -5,7 +5,7 @@ export const shortenUrl = async (req, res, next) => {
     const urlData = req.body
     const idUser = req.idUser
     const newUrl = await urlService.shortenUrl(urlData, idUser)
-    return res.status(201).json(newUrl)
+    return res.status(200).json(newUrl)
   } catch (err) {
     return next(err)
   }

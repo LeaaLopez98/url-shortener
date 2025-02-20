@@ -1,4 +1,6 @@
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
+import spec from './src/config/swagger.js'
 import './src/config/db.js'
 
 import { urlRouter } from './src/routes/urlRoutes.js'
@@ -9,7 +11,9 @@ const app = express()
 
 const PORT = 3000
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec))
 app.use(express.json())
+
 app.use('', urlRouter)
 app.use('/api/auth', authRouter)
 

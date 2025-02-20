@@ -1,0 +1,78 @@
+paths:
+  /api/auth/login:
+    post:
+      tags:
+        - authentication
+      summary: Login user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginBody'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+        '400':
+          description: Missing or invalid parameters
+        '401':
+          description: Incorrect username or password
+
+
+  /api/auth/signup:
+    post:
+      tags:
+        - authentication
+      summary: Register an user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerBody'
+      responses:
+        '200':
+          description: Register successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+        '400':
+          description: Missing or invalid parameters
+
+components:
+  schemas:
+    loginBody:
+      type: object
+      properties:
+        username:
+          type: string
+          example: usernameExample
+          required: true
+        password:
+          type: string
+          example: passwordExample123
+          required: true
+    registerBody:
+      type: object
+      properties:
+        username:
+          type: string
+          example: usernameExample
+          required: true
+        password:
+          type: string
+          example: passwordExample123
+          required: true
+        email:
+          type: string
+          example: example@gmail.com
+          required: true
+    token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiI2N2I2MWNmMDdhNjg3MWVlZTk0N2VlNzIiLCJleHAiOjE3Mzk5OTE4MDgsImlhdCI6MTczOTk4ODIwOH0.RiWNiM-o9oWljmAPWSPGiKw8hhn9Dn3RaVRFpORa7Ok 

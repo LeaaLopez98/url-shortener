@@ -1,0 +1,145 @@
+paths:
+  /{shortenUrl}:
+    get:
+      tags:
+        - urls
+      summary: Redirection
+      parameters:
+        - name: shortenUrl
+          in: path
+          description: Shortened URL to redirect to original URL
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirection successful
+        '404':
+          description: Shortened URL not found
+        '500':
+          description: Internal server error
+
+  /api/urls:
+    post:
+      tags:
+        - urls
+      summary: Shorten an URL
+      parameters:
+        - name: authorization
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestUrl'
+      responses:
+        '200':
+          description: shorten URL successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUrl'
+        '400':
+          description: Missing or invalid parameters
+        '401':
+          description: Invalid or expired token
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - urls
+      summary: Get all URLs for a logged user 
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of all URLs for a logged user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/responseUrl'
+        '204':
+          description: User don't have shorten URLs
+        '401':
+          description: Token is required
+        '500':
+          description: Internal server error
+  /api/urls/{idUrl}:
+    delete:
+      tags:
+        - urls
+      summary: Delete a URL by id 
+      parameters:
+        - name: idUrl
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delete an URL 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUrl'
+        '401':
+          description: Access denied
+        '404':
+          description: URL not found
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - urls
+      summary: Get URL by id
+      parameters:
+        - name: idUrl
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: get URL 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUrl'
+        '401':
+          description: Access denied
+        '404':
+          description: URL not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    requestUrl:
+      type: object
+      properties:
+        originalUrl:
+          type: string
+          example: https://www.google.com.ar
+          required: true
+        expirationTime:
+          type: date
+    responseUrl:
+      type: object
+      properties:
+        originalUrl:
+          type: string
+          example: https://www.google.com.ar
+        shortenUrl:
+          type: string
+          example: OlKv1q
+        expirationTime:
+          type: date

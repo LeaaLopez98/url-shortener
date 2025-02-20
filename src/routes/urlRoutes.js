@@ -9,6 +9,7 @@ const urlRouter = Router()
 const ENDPOINT = '/api/urls'
 
 // ENDPOINTS TO HANDLE URLs
+
 urlRouter.post(ENDPOINT, validateData(urlDTO), verifyTokenToCreateURL, urlController.shortenUrl)
 urlRouter.get(ENDPOINT, verifyJwt, urlController.getUserUrls)
 urlRouter.get(`${ENDPOINT}/:idUrl`, verifyJwt, urlController.getUrlById)
