@@ -23,7 +23,7 @@ La aplicación se ejecuta en contenedores Docker, tanto para MongoDB como para R
 - **Express.js**: Framework web para Node.js.
 - **Docker**: Contenedores para levantar MongoDB y Redis.
 - **MongoDB**: Base de datos NoSQL para almacenar las URLs y los datos de los usuarios.
-- **Redis**: Almacenamiento en memoria utilizado para gestionar el contador de clics de manera eficiente.
+- **Redis**: Almacenamiento en memoria utilizado para gestionar un contador para que a partir de este se generen URLs unicas.
 - **Mongoose**: ODM (Object Data Modeling) para MongoDB en Node.js.
 - **JWT (JSON Web Token)**: Autenticación y autorización de usuarios.
 - **bcrypt**: Librería para encriptar contraseñas de los usuarios.
@@ -45,7 +45,7 @@ Almacena la información de los usuarios registrados.
    urls: [url]            // Urls pertenecientes al usuario
 }
 ```
-### url
+### `url`
 Almacena la información de las urls acortadas
 ```js
 {
