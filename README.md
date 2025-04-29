@@ -27,7 +27,7 @@ A full-featured URL shortening service built with modern web technologies.
 
 ### Prerequisites
 
-- Node.js (latest LTS version)
+- Node.js
 - Docker and Docker Compose
 - Git
 
