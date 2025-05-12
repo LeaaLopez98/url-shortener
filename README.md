@@ -1,7 +1,5 @@
 # URL Shortener 🔗
 
-A full-featured URL shortening service built with modern web technologies.
-
 ## ✨ Features
 
 - **🔗 URL Shortening**: Create shortened URLs for easier sharing
