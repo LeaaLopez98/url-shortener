@@ -67,14 +67,6 @@ The application will be available at `http://localhost:3000`
 
 Swagger UI documentation is available at `http://localhost:3000/api-docs` when the application is running.
 
-## 🏗️ Architecture
-
-This application uses a bijective function (Hashids) with Redis counters to generate short, unique URLs:
-
-1. A counter in Redis is incremented for each new URL
-2. The counter value is encoded using Hashids to create the shortened URL
-3. The bijective function ensures that each URL maps to exactly one shortened URL and vice versa
-
 ## 💾 Data Models
 
 ### URL Schema
